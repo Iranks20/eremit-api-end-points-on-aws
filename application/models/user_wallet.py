@@ -30,6 +30,7 @@ class UserWallet:
 
     
     # CREATE OTHER WALLETS
+    @token_required
     def otherWallets():
         try:
             _json = request.json
@@ -88,7 +89,6 @@ class UserWallet:
 
     # display all wallets
     @staticmethod
-    @token_required
     def allWallets():
         try:
             sql = "SELECT * FROM `user_wallet` "

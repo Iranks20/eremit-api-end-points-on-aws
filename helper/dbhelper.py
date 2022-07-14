@@ -15,11 +15,13 @@ class Database:
     def select(query):
         conn.execute(query)
         rows = conn.fetchall()
+        conn.close()
         return rows
 
     @staticmethod
     def delete(query):
         conn.execute(query)
+        conn.close()
         return True
 
     @staticmethod
@@ -30,6 +32,7 @@ class Database:
         sql = "INSERT INTO %s ( %s ) VALUES ( %s )" % (table_name, columns, keys)
         conn.execute(sql, values)
         last_id = conn.lastrowid
+        conn.close()
         return last_id
 
     @staticmethod
@@ -40,6 +43,7 @@ class Database:
         values = tuple(d.values())
         conn.execute(sql, values)
         last_id = conn.lastrowid
+        conn.close()
         return last_id
 
 

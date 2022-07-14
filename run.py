@@ -1,3 +1,4 @@
+from pickle import FALSE
 from application import application
 from application.controllers.user import bp_app as user_mod
 from application.controllers.user_wallet import bp_app as wallet_mod
@@ -10,4 +11,4 @@ application.register_blueprint(wallet_mod)
 application.register_blueprint(transaction_mod)
 application.register_blueprint(currency_mod)
 application.register_blueprint(notification_mod)
-application.run(port=2525, host="0.0.0.0", debug=True)
+application.run(port=9000, host="0.0.0.0", debug=FALSE)

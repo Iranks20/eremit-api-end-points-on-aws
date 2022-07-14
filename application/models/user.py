@@ -18,7 +18,6 @@ class User:
         print('user model')
 
     @staticmethod
-    @token_required
     def all_users():
         sql = "SELECT * FROM `user` "
         data = db.select(sql)
@@ -30,7 +29,7 @@ class User:
         try:
             _user_id = uuid.uuid4()
             _json = request.json
-            _first_name = _json['first_name']
+            _first_name = _json['first_name']   
             _last_name = _json['last_name']
             _phone_number = _json['phone_number']
             _email = _json['email']
@@ -145,24 +144,24 @@ class User:
             hash_password = hashlib.sha256(str(_password).encode('utf-8')).hexdigest()
 
             check_user = get_user_details(_email, hash_password)
-            userId = check_user[0]['user_id']
-            status = check_user[0]['status']
-            Userdata = get_user_details_by_id(userId)
+            # userId = check_user[0]['user_id']
+            # status = check_user[0]['status']
+            # Userdata = get_user_details_by_id(userId)
 
-            if len(check_user) <= 0:
-                data = make_response(403, "Invalid User")
-                return data
-            if status != 'Active':
-                response = make_response(403, "can't log the user in")
-                return response
-            token = jwt.encode({
-                'email': _email,
-                'expiration': str(datetime.now() + timedelta(hours=23))
-            },
-                application.config['SECRET_KEY'])
-            response = user_logged_response(100, "user loggedin successfully", Userdata, token)
+            # if len(check_user) <= 0:
+            #     data = make_response(403, "Invalid User")
+            #     return data
+            # if status != 'Active':
+            #     response = make_response(403, "can't log the user in")
+            #     return response
+            # token = jwt.encode({
+            #     'email': _email,
+            #     'expiration': str(datetime.now() + timedelta(hours=23))
+            # },
+            #     application.config['SECRET_KEY'])
+            # response = user_logged_response(100, "user loggedin successfully", Userdata, token)
             
-            return response
+            return make_response(101, check_user)
         
         except Exception as e:
             print(e)
